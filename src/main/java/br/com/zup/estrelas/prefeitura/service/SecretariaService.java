@@ -3,6 +3,7 @@ package br.com.zup.estrelas.prefeitura.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,9 @@ public class SecretariaService implements ISecretariaService {
 		boolean verificaDisponibilidadeArea = repository.findByArea(secretariaDTO.getArea()).isEmpty();
 
 		if (verificaDisponibilidadeArea) {
-			Secretaria secretaria = montarObjetoSecretaria(secretariaDTO);
+			Secretaria secretaria = new Secretaria();
+			BeanUtils.copyProperties(secretariaDTO, secretaria);
+			
 			repository.save(secretaria);
 			return new MensagemDTO(SECRETARIA_CADASTRADA_COM_SUCESSO);
 		}
@@ -45,23 +48,24 @@ public class SecretariaService implements ISecretariaService {
 
 	public MensagemDTO alterarSecretaria(Long idSecretaria, SecretariaDTO secretariaDTO) {
 		Optional<Secretaria> secretariaConsultada = repository.findById(idSecretaria);
-
+		Secretaria secretaria = repository.findByArea(secretariaDTO.getArea()).get();
+		
 		boolean verificaAreaOcupada = repository.findByArea(secretariaDTO.getArea()).isPresent();
+		boolean verificaIdConsultadoAreaDiferenteIdEnviado = secretaria.getIdSecretaria() != idSecretaria;
 
-		if (verificaAreaOcupada) {
+		if (verificaAreaOcupada && verificaIdConsultadoAreaDiferenteIdEnviado) {
 			return new MensagemDTO(SECRETARIA_COM_AREA_EXISTENTE);
 		}
-
+		
 		if (secretariaConsultada.isPresent()) {
-			Secretaria secretaria = secretariaConsultada.get();
-			secretaria = montarObjetoSecretaria(secretariaDTO);
-
+			BeanUtils.copyProperties(secretariaDTO, secretaria);
+			
 			secretaria.setIdSecretaria(idSecretaria);
 
 			repository.save(secretaria);
 			return new MensagemDTO(SECRETARIA_ALTERADA_COM_SUCESSO);
 		}
-
+		
 		return new MensagemDTO(SECRETARIA_INEXISTENTE);
 	}
 
@@ -74,17 +78,4 @@ public class SecretariaService implements ISecretariaService {
 		return new MensagemDTO(SECRETARIA_INEXISTENTE);
 	}
 
-	public Secretaria montarObjetoSecretaria(SecretariaDTO secretariaDTO) {
-		Secretaria secretaria = new Secretaria();
-
-		secretaria.setArea(secretariaDTO.getArea());
-		secretaria.setOrcamentoProjeto(secretariaDTO.getOrcamentoProjeto());
-		secretaria.setOrcamentoFolha(secretariaDTO.getOrcamentoFolha());
-		secretaria.setTelefone(secretariaDTO.getTelefone());
-		secretaria.setEndereco(secretariaDTO.getEndereco());
-		secretaria.setSite(secretariaDTO.getSite());
-		secretaria.setEmail(secretariaDTO.getEmail());
-
-		return secretaria;
-	}
 }

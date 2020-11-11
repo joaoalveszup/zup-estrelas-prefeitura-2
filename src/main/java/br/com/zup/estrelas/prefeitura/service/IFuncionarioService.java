@@ -13,7 +13,7 @@ public interface IFuncionarioService {
 
 	public List<Funcionario> listarFuncionarios();
 
-	public MensagemDTO alterarFuncionario(FuncionarioDTO funcionarioDTO);
+	public MensagemDTO alterarFuncionario(Long idFuncionario, FuncionarioDTO funcionarioDTO);
 
 	public MensagemDTO removerFuncionario(Long idFuncionario);
 }

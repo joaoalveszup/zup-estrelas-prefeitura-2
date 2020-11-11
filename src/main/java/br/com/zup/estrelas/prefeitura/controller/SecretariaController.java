@@ -30,7 +30,7 @@ public class SecretariaController {
 		return service.adicionarSecretaria(secretariaDTO);
 	}
 
-	@GetMapping(path = "{idSecretaria}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(path = "/{idSecretaria}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public Secretaria buscarSecretariaPorId(@PathVariable Long idSecretaria) {
 		return service.buscarSecretariaPorId(idSecretaria);	
 	}
@@ -40,12 +40,12 @@ public class SecretariaController {
 		return service.listarSecretarias();
 	}
 
-	@PutMapping(path = "{idSecretaria}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@PutMapping(path = "/{idSecretaria}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public MensagemDTO alterarSecretaria(@PathVariable Long idSecretaria, @RequestBody SecretariaDTO secretariaDTO) {
 		return service.alterarSecretaria(idSecretaria, secretariaDTO);
 	}
 
-	@DeleteMapping(path = "{idSecretaria}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@DeleteMapping(path = "/{idSecretaria}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public MensagemDTO removerSecretaria(@PathVariable Long idSecretaria) {
 		return service.removerSecretaria(idSecretaria);
 	}

@@ -51,6 +51,5 @@ public class Funcionario {
 
 	@NotNull
 	@Column(name = "data_admissao")
-	// @Temporal(TemporalType.DATE)
 	private LocalDate dataAdmissao;
 }

@@ -1,7 +1,5 @@
 package br.com.zup.estrelas.prefeitura.dto;
 
-import java.time.LocalDate;
-
 import lombok.Getter;
 
 @Getter
@@ -16,6 +14,4 @@ public class FuncionarioDTO {
 	private String funcao;
 	
 	private boolean concursado;
-	
-	private LocalDate dataAdmissao;
 }
