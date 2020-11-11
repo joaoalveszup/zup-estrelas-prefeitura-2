@@ -1,0 +1,8 @@
+br\com\zup\estrelas\prefeitura\repository\ProjetoRepository.class
+br\com\zup\estrelas\prefeitura\entity\Funcionario.class
+br\com\zup\estrelas\prefeitura\entity\Projeto.class
+br\com\zup\estrelas\prefeitura\repository\FuncionarioRepository.class
+br\com\zup\estrelas\prefeitura\repository\SecretariaRepository.class
+br\com\zup\estrelas\prefeitura\ZupEstrelasPrefeituraApplication.class
+br\com\zup\estrelas\prefeitura\enums\Area.class
+br\com\zup\estrelas\prefeitura\entity\Secretaria.class
