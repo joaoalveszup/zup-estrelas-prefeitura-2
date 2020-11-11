@@ -9,7 +9,9 @@ import br.com.zup.estrelas.prefeitura.entity.Secretaria;
 public interface ISecretariaService {
 	public MensagemDTO adicionarSecretaria(SecretariaDTO secretariaDTO);
 	
-	public List<Secretaria> buscarSecretarias();
+	public Secretaria buscarSecretariaPorId(Long idSecretaria);
+	
+	public List<Secretaria> listarSecretarias();
 	
 	public MensagemDTO alterarSecretaria(Long idSecretaria, SecretariaDTO secretariaDTO);
 	
