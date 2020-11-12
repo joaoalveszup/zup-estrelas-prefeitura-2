@@ -185,5 +185,5 @@ public class FuncionarioService implements IFuncionarioService {
 		secretaria.setOrcamentoFolha(secretaria.getOrcamentoFolha() + salarioFuncionario);
 		secretariaRepository.save(secretaria);
 	}
-	
+
 }
