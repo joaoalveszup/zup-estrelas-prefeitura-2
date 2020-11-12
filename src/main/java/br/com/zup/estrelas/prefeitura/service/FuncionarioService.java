@@ -2,6 +2,7 @@ package br.com.zup.estrelas.prefeitura.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import br.com.zup.estrelas.prefeitura.repository.SecretariaRepository;
 @Service
 public class FuncionarioService implements IFuncionarioService {
 
+	private static final String SECRETARIA_INEXISTENTE = "Não foi possivel cadastrar funcionario, secretaria inexistente.";
+
 	private static final String CPF_CADASTRADO = "Não foi possivel cadastrar funcionario, cpf já cadastrado.";
 
 	private static final String ORCAMENTO_FOLHA_INSUFICIENTE = "Não foi possivel cadastrar funcionario, "
@@ -31,12 +34,18 @@ public class FuncionarioService implements IFuncionarioService {
 	SecretariaRepository secretariaRepository;
 
 	public MensagemDTO adicionarFuncionario(FuncionarioDTO funcionarioDTO) {	
-		Secretaria secretaria = secretariaRepository.findById(funcionarioDTO.getIdSecretaria()).get();
-
+		Optional<Secretaria> secretariaOptional = secretariaRepository.findById(funcionarioDTO.getIdSecretaria());
+		
+		if(secretariaOptional.isEmpty()) {
+			return new MensagemDTO(SECRETARIA_INEXISTENTE);
+		}
+		
+		Secretaria secretaria = secretariaOptional.get();
+		
 		boolean salarioCompativelOrcamentoFolhaSecretaria = funcionarioDTO.getSalario() <= secretaria
 				.getOrcamentoFolha();
 		boolean verificaCpfCadastrado = repository.findByCpf(funcionarioDTO.getCpf()).isPresent();
-
+		
 		if (verificaCpfCadastrado) {
 			return new MensagemDTO(CPF_CADASTRADO);
 		}
@@ -58,13 +67,11 @@ public class FuncionarioService implements IFuncionarioService {
 	}
 
 	public Funcionario buscarFuncionarioPorId(Long idFuncionario) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(idFuncionario).orElse(null);
 	}
 
 	public List<Funcionario> listarFuncionarios() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Funcionario>) repository.findAll();
 	}
 
 	public MensagemDTO alterarFuncionario(Long idFuncionario, FuncionarioDTO funcionarioDTO) {

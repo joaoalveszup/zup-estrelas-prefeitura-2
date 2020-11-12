@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 import br.com.zup.estrelas.prefeitura.enums.Area;
@@ -59,10 +60,12 @@ public class Secretaria {
 	private String email;
 
 	@OneToMany(mappedBy = "secretaria", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Funcionario> funcionarios;
 
 	@OneToMany(mappedBy = "secretaria", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Projeto> projetos;
 }

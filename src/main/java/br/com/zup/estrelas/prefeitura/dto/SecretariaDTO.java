@@ -5,7 +5,6 @@ import javax.persistence.Enumerated;
 
 import br.com.zup.estrelas.prefeitura.enums.Area;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class SecretariaDTO {

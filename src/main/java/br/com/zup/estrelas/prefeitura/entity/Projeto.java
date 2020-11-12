@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -40,6 +41,7 @@ public class Projeto {
 
 	@NotNull
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "id_secretaria", foreignKey = @ForeignKey(name = "FK_SECRETARIA_PROJETO"))
 	private Secretaria secretaria;
 
