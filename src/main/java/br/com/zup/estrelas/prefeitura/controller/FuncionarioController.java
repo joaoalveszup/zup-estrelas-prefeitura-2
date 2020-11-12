@@ -44,9 +44,9 @@ public class FuncionarioController {
 			@RequestBody FuncionarioDTO funcionarioDTO) {
 		return service.alterarFuncionario(idFuncionario, funcionarioDTO);
 	}
-	
+
 	@DeleteMapping(path = "/{idFuncionario}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public MensagemDTO removerFuncionario(Long idFuncionario) {
+	public MensagemDTO removerFuncionario(@PathVariable Long idFuncionario) {
 		return service.removerFuncionario(idFuncionario);
 	}
 }
