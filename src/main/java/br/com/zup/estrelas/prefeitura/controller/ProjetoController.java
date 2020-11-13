@@ -25,7 +25,8 @@ public class ProjetoController {
 
 	@Autowired
 	IProjetoService service;
-
+	
+	//Passar ID Secretaria no URL
 	@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public MensagemDTO adicionarProjeto(@RequestBody ProjetoDTO projetoDTO) {
 		return service.adicionarProjeto(projetoDTO);
@@ -37,8 +38,8 @@ public class ProjetoController {
 	}
 
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
-	public List<Projeto> buscarProjetos() {
-		return service.buscarProjetos();
+	public List<Projeto> listarProjetos() {
+		return service.listarProjetos();
 	}
 
 	@PutMapping(path = "/{idProjeto}", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -51,8 +52,8 @@ public class ProjetoController {
 		return service.excluirProjeto(idProjeto);
 	}
 
-	@PutMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
-	public MensagemDTO concluirProjeto(@RequestBody ConclusaoProjetoDTO conclusaoProjetoDTO) {
-		return service.concluirProjeto(conclusaoProjetoDTO);
+	@PutMapping(path = "/conclusao/{idProjeto}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public MensagemDTO concluirProjeto(@PathVariable Long idProjeto, @RequestBody ConclusaoProjetoDTO conclusaoProjetoDTO) {
+		return service.concluirProjeto(idProjeto, conclusaoProjetoDTO);
 	}
 }

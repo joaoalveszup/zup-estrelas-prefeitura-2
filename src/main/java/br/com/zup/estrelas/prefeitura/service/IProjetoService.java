@@ -12,11 +12,11 @@ public interface IProjetoService {
 	
 	public Projeto buscarProjetoPorId(Long idProjeto);
 	
-	public List<Projeto> buscarProjetos();
+	public List<Projeto> listarProjetos();
 	
 	public MensagemDTO alterarProjeto(Long idProjeto, ProjetoDTO projetoDTO);
 	
 	public MensagemDTO excluirProjeto(Long idProjeto);
 
-	public MensagemDTO concluirProjeto(ConclusaoProjetoDTO conclusaoProjetoDTO);
+	public MensagemDTO concluirProjeto(Long idProjeto, ConclusaoProjetoDTO conclusaoProjetoDTO);
 }
