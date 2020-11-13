@@ -1,11 +1,11 @@
 package br.com.zup.estrelas.prefeitura.dto;
 
 import java.time.LocalDate;
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
-@Getter @AllArgsConstructor
+@Getter
+@Setter
 public class ConclusaoProjetoDTO {
 	private LocalDate dataEntrega;
 }

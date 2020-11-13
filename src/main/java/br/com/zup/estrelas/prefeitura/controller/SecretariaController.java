@@ -32,9 +32,9 @@ public class SecretariaController {
 
 	@GetMapping(path = "/{idSecretaria}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public Secretaria buscarSecretariaPorId(@PathVariable Long idSecretaria) {
-		return service.buscarSecretariaPorId(idSecretaria);	
+		return service.buscarSecretariaPorId(idSecretaria);
 	}
-	
+
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public List<Secretaria> listarSecretarias() {
 		return service.listarSecretarias();

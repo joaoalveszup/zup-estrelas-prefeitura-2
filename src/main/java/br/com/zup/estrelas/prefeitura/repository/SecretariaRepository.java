@@ -9,6 +9,6 @@ import br.com.zup.estrelas.prefeitura.entity.Secretaria;
 import br.com.zup.estrelas.prefeitura.enums.Area;
 
 @Repository
-public interface SecretariaRepository extends CrudRepository<Secretaria, Long> { 
+public interface SecretariaRepository extends CrudRepository<Secretaria, Long> {
 	Optional<Secretaria> findByArea(Area area);
 }

@@ -10,5 +10,4 @@ import br.com.zup.estrelas.prefeitura.entity.Funcionario;
 @Repository
 public interface FuncionarioRepository extends CrudRepository<Funcionario, Long> {
 	Optional<Funcionario> findByCpf(String cpf);
-
 }

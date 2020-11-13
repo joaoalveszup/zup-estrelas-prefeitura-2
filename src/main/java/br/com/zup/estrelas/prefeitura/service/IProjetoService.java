@@ -10,11 +10,11 @@ import br.com.zup.estrelas.prefeitura.entity.Projeto;
 
 public interface IProjetoService {
 	public MensagemDTO adicionarProjeto(ProjetoDTO projetoDTO);
-	
+
 	public Projeto buscarProjetoPorId(Long idProjeto);
-	
+
 	public List<Projeto> listarProjetos();
-	
+
 	public MensagemDTO alterarProjeto(Long idProjeto, AlterarProjetoDTO alterarProjetoDTO);
 
 	public MensagemDTO concluirProjeto(Long idProjeto, ConclusaoProjetoDTO conclusaoProjetoDTO);

@@ -19,28 +19,17 @@ import br.com.zup.estrelas.prefeitura.repository.SecretariaRepository;
 public class FuncionarioService implements IFuncionarioService {
 
 	private static final String SALARIO_FUNCIONARIO_INVALIDO = "Não foi possivel cadastrar funcionario, salario do funcionario invalido.";
-
 	private static final String FUNCIONARIO_EXCLUIDO_COM_SUCESSO = "Funcionario excluido com sucesso!";
-
 	private static final String SECRETARIA_INVALIDA = "Não foi possivel alterar funcionario, nova secretaria invalida.";
-
 	private static final String FUNCIONARIO_ALTERADO_COM_SUCESSO = "Funcionario alterado com sucesso!";
-
 	private static final String NOVO_SALARIO_MENOR_SALARIO_ATUAL = "Infelizmente não foi possivel completar a operação, novo salario não pode ser menor que salario atual.";
-
-	private static final String ALTERAR_ORCAMENTO_FOLHA_INSUFICIENTE = "Não foi possivel alterar funcionario, nova secretaria não possui orçamento em folha suficiente para contratação.";
-
+	private static final String ALTERAR_ORCAMENTO_FOLHA_INSUFICIENTE = "Não foi possivel alterar funcionario, secretaria não possui orçamento em folha suficiente para contratação.";
 	private static final String FUNCIONARIO_CPF_EXISTENTE = "Infelizmente não foi possivel completar a operação, já possui um funcionario com este CPF.";
-
 	private static final String FUNCIONARIO_INEXISTENTE = "Funcionario inexistente.";
-
 	private static final String SECRETARIA_INEXISTENTE = "Não foi possivel cadastrar funcionario, secretaria inexistente.";
-
 	private static final String CPF_CADASTRADO = "Não foi possivel cadastrar funcionario, cpf já cadastrado.";
-
 	private static final String ADICIONAR_ORCAMENTO_FOLHA_INSUFICIENTE = "Não foi possivel cadastrar funcionario, "
 			+ "secretaria não possui orçamento em folha suficiente para contratação.";
-
 	private static final String FUNCIONARIO_CADASTRADO_COM_SUCESSO = "Funcionario cadastrado com sucesso!";
 
 	@Autowired
@@ -102,15 +91,24 @@ public class FuncionarioService implements IFuncionarioService {
 			return new MensagemDTO(FUNCIONARIO_INEXISTENTE);
 		}
 
-		Funcionario funcionario = repository.findByCpf(funcionarioDTO.getCpf()).get();
-
 		boolean verificaSalarioIgualInferiorZero = funcionarioDTO.getSalario() <= 0;
-		boolean verificaCpfCadastrado = repository.findByCpf(funcionarioDTO.getCpf()).isPresent();
-		boolean verificaIdConsultadoDiferenteIdEnviado = funcionario.getIdFuncionario() != idFuncionario;
 
 		if (verificaSalarioIgualInferiorZero) {
 			return new MensagemDTO(SALARIO_FUNCIONARIO_INVALIDO);
 		}
+
+		Optional<Funcionario> funcionarioConsultadoCpf = repository.findByCpf(funcionarioDTO.getCpf());
+
+		Funcionario funcionario = new Funcionario();
+
+		if (funcionarioConsultadoCpf.isPresent()) {
+			funcionario = funcionarioConsultadoCpf.get();
+		} else {
+			funcionario = funcionarioOptional.get();
+		}
+
+		boolean verificaCpfCadastrado = repository.findByCpf(funcionarioDTO.getCpf()).isPresent();
+		boolean verificaIdConsultadoDiferenteIdEnviado = funcionario.getIdFuncionario() != idFuncionario;
 
 		if (verificaCpfCadastrado && verificaIdConsultadoDiferenteIdEnviado) {
 			return new MensagemDTO(FUNCIONARIO_CPF_EXISTENTE);
@@ -144,6 +142,10 @@ public class FuncionarioService implements IFuncionarioService {
 		boolean validaNecessidadeAlteracaoOrcamentoFolhaSecretaria = !verificaSalarioAtualIgualSalarioDTO
 				&& !verificaMudancaSecretaria && salarioCompativelOrcamentoFolha;
 
+		if (!salarioCompativelOrcamentoFolha) {
+			return new MensagemDTO(ALTERAR_ORCAMENTO_FOLHA_INSUFICIENTE);
+		}
+
 		if (validaNecessidadeAlteracaoOrcamentoFolhaSecretaria) {
 			Double diferencaSalarioAtualComNovoSalario = funcionarioDTO.getSalario() - funcionario.getSalario();
 			subtrairOrcamentoFolhaSecretaria(secretaria, diferencaSalarioAtualComNovoSalario);
@@ -160,11 +162,11 @@ public class FuncionarioService implements IFuncionarioService {
 
 	public MensagemDTO removerFuncionario(Long idFuncionario) {
 		Optional<Funcionario> funcionarioOptional = repository.findById(idFuncionario);
-		
+
 		if (funcionarioOptional.isEmpty()) {
 			return new MensagemDTO(FUNCIONARIO_INEXISTENTE);
 		}
-		
+
 		Funcionario funcionario = funcionarioOptional.get();
 		Secretaria secretaria = secretariaRepository.findById(funcionario.getSecretaria().getIdSecretaria()).get();
 		adicionarOrcamentoFolhaSecretaria(secretaria, funcionario.getSalario());

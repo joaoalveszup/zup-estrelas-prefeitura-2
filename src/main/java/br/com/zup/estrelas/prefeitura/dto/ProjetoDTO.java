@@ -6,8 +6,8 @@ import lombok.Getter;
 public class ProjetoDTO {
 	private String nome;
 	private String descricao;
-	
+
 	private Double custo;
-	
+
 	private Long idSecretaria;
 }

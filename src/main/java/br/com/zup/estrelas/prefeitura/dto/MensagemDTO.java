@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@Getter @AllArgsConstructor @EqualsAndHashCode
+@Getter
+@AllArgsConstructor
+@EqualsAndHashCode
 public class MensagemDTO {
 	private String mensagem;
 }
