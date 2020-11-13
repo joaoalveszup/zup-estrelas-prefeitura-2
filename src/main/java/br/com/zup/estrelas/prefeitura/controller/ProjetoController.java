@@ -47,7 +47,7 @@ public class ProjetoController {
 		return service.alterarProjeto(idProjeto, alterarProjetoDTO);
 	}
 
-	@PutMapping(path = "conclusao/{idProjeto}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@PutMapping(path = "conclusoes/{idProjeto}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public MensagemDTO concluirProjeto(@PathVariable Long idProjeto, @RequestBody ConclusaoProjetoDTO conclusaoProjetoDTO) {
 		return service.concluirProjeto(idProjeto, conclusaoProjetoDTO);
 	}
