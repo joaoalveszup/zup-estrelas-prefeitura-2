@@ -18,6 +18,8 @@ import br.com.zup.estrelas.prefeitura.repository.SecretariaRepository;
 @Service
 public class FuncionarioService implements IFuncionarioService {
 
+	private static final String SALARIO_FUNCIONARIO_INVALIDO = "Não foi possivel cadastrar funcionario, salario do funcionario invalido.";
+
 	private static final String FUNCIONARIO_EXCLUIDO_COM_SUCESSO = "Funcionario excluido com sucesso!";
 
 	private static final String SECRETARIA_INVALIDA = "Não foi possivel alterar funcionario, nova secretaria invalida.";
@@ -56,16 +58,21 @@ public class FuncionarioService implements IFuncionarioService {
 
 		Secretaria secretaria = secretariaOptional.get();
 
+		boolean verificaSalarioIgualInferiorZero = funcionarioDTO.getSalario() <= 0;
+		boolean verificaCpfCadastrado = repository.findByCpf(funcionarioDTO.getCpf()).isPresent();
 		boolean salarioCompativelOrcamentoFolhaSecretaria = funcionarioDTO.getSalario() <= secretaria
 				.getOrcamentoFolha();
-		boolean verificaCpfCadastrado = repository.findByCpf(funcionarioDTO.getCpf()).isPresent();
+
+		if (verificaSalarioIgualInferiorZero) {
+			return new MensagemDTO(SALARIO_FUNCIONARIO_INVALIDO);
+		}
 
 		if (verificaCpfCadastrado) {
 			return new MensagemDTO(CPF_CADASTRADO);
 		}
 
 		if (salarioCompativelOrcamentoFolhaSecretaria) {
-			subtraiOrcamentoFolhaSecretaria(secretaria, funcionarioDTO.getSalario());
+			subtrairOrcamentoFolhaSecretaria(secretaria, funcionarioDTO.getSalario());
 			Funcionario funcionario = new Funcionario();
 
 			BeanUtils.copyProperties(funcionarioDTO, funcionario);
@@ -97,8 +104,13 @@ public class FuncionarioService implements IFuncionarioService {
 
 		Funcionario funcionario = repository.findByCpf(funcionarioDTO.getCpf()).get();
 
+		boolean verificaSalarioIgualInferiorZero = funcionarioDTO.getSalario() <= 0;
 		boolean verificaCpfCadastrado = repository.findByCpf(funcionarioDTO.getCpf()).isPresent();
 		boolean verificaIdConsultadoDiferenteIdEnviado = funcionario.getIdFuncionario() != idFuncionario;
+
+		if (verificaSalarioIgualInferiorZero) {
+			return new MensagemDTO(SALARIO_FUNCIONARIO_INVALIDO);
+		}
 
 		if (verificaCpfCadastrado && verificaIdConsultadoDiferenteIdEnviado) {
 			return new MensagemDTO(FUNCIONARIO_CPF_EXISTENTE);
@@ -129,10 +141,12 @@ public class FuncionarioService implements IFuncionarioService {
 
 		boolean verificaSalarioAtualIgualSalarioDTO = funcionario.getSalario().equals(funcionarioDTO.getSalario());
 		boolean salarioCompativelOrcamentoFolha = funcionarioDTO.getSalario() <= secretaria.getOrcamentoFolha();
+		boolean validaNecessidadeAlteracaoOrcamentoFolhaSecretaria = !verificaSalarioAtualIgualSalarioDTO
+				&& !verificaMudancaSecretaria && salarioCompativelOrcamentoFolha;
 
-		if (!verificaSalarioAtualIgualSalarioDTO && !verificaMudancaSecretaria && salarioCompativelOrcamentoFolha) {
+		if (validaNecessidadeAlteracaoOrcamentoFolhaSecretaria) {
 			Double diferencaSalarioAtualComNovoSalario = funcionarioDTO.getSalario() - funcionario.getSalario();
-			subtraiOrcamentoFolhaSecretaria(secretaria, diferencaSalarioAtualComNovoSalario);
+			subtrairOrcamentoFolhaSecretaria(secretaria, diferencaSalarioAtualComNovoSalario);
 		}
 
 		BeanUtils.copyProperties(funcionarioDTO, funcionario);
@@ -151,7 +165,7 @@ public class FuncionarioService implements IFuncionarioService {
 		}
 		Funcionario funcionario = funcionarioOptional.get();
 		Secretaria secretaria = secretariaRepository.findById(funcionario.getSecretaria().getIdSecretaria()).get();
-		adicionaOrcamentoFolhaSecretaria(secretaria, funcionario.getSalario());
+		adicionarOrcamentoFolhaSecretaria(secretaria, funcionario.getSalario());
 
 		repository.delete(funcionario);
 
@@ -169,19 +183,19 @@ public class FuncionarioService implements IFuncionarioService {
 			Double salarioFuncionario = funcionarioDTO.getSalario();
 			Double salarioSecretariaAtual = funcionario.getSalario();
 
-			subtraiOrcamentoFolhaSecretaria(novaSecretaria, salarioFuncionario);
-			adicionaOrcamentoFolhaSecretaria(secretariaAtual, salarioSecretariaAtual);
+			subtrairOrcamentoFolhaSecretaria(novaSecretaria, salarioFuncionario);
+			adicionarOrcamentoFolhaSecretaria(secretariaAtual, salarioSecretariaAtual);
 			return true;
 		}
 		return false;
 	}
 
-	public void subtraiOrcamentoFolhaSecretaria(Secretaria secretaria, Double salarioFuncionario) {
+	public void subtrairOrcamentoFolhaSecretaria(Secretaria secretaria, Double salarioFuncionario) {
 		secretaria.setOrcamentoFolha(secretaria.getOrcamentoFolha() - salarioFuncionario);
 		secretariaRepository.save(secretaria);
 	}
 
-	public void adicionaOrcamentoFolhaSecretaria(Secretaria secretaria, Double salarioFuncionario) {
+	public void adicionarOrcamentoFolhaSecretaria(Secretaria secretaria, Double salarioFuncionario) {
 		secretaria.setOrcamentoFolha(secretaria.getOrcamentoFolha() + salarioFuncionario);
 		secretariaRepository.save(secretaria);
 	}
