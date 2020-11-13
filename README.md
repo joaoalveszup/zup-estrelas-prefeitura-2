@@ -22,6 +22,9 @@
     - Listagem de todos projetos presentes;
     - Conclusão de projeto.
     
+#### REQUISIÇÕES
+* [Postman](https://documenter.getpostman.com/view/13173271/TVep7mv2)
+
 #### RELACIONAMENTOS
 
 ![Relacionamento_Sistema_Prefeitura](https://user-images.githubusercontent.com/71403141/99076649-39cf2480-259a-11eb-8cda-e91cf28bb0d5.png)
@@ -32,8 +35,8 @@
     - Cadastro de nova secretaria;
     - Remoção de secretaria.
     
-1. Métodos testados em projeto:
-	-Conclusão de projeto.
+2. Métodos testados em projeto:
+	- Conclusão de projeto.
 
 #### PRINCIPAIS BIBLIOTECAS UTILIZADAS PARA EXECUÇÃO DO PROJETO:
 

@@ -23,14 +23,14 @@ public class SecretariaService implements ISecretariaService {
 
 	@Autowired
 	SecretariaRepository repository;
-	
+
 	public MensagemDTO adicionarSecretaria(SecretariaDTO secretariaDTO) {
 		boolean verificaDisponibilidadeArea = repository.findByArea(secretariaDTO.getArea()).isEmpty();
 
 		if (verificaDisponibilidadeArea) {
 			Secretaria secretaria = new Secretaria();
 			BeanUtils.copyProperties(secretariaDTO, secretaria);
-			
+
 			repository.save(secretaria);
 			return new MensagemDTO(SECRETARIA_CADASTRADA_COM_SUCESSO);
 		}
@@ -48,25 +48,37 @@ public class SecretariaService implements ISecretariaService {
 
 	public MensagemDTO alterarSecretaria(Long idSecretaria, SecretariaDTO secretariaDTO) {
 		Optional<Secretaria> secretariaConsultada = repository.findById(idSecretaria);
-		Secretaria secretaria = repository.findByArea(secretariaDTO.getArea()).get();
-		
+
+		if (secretariaConsultada.isEmpty()) {
+			return new MensagemDTO(SECRETARIA_INEXISTENTE);
+		}
+
+		Optional<Secretaria> secretariaConsultadaArea = repository.findByArea(secretariaDTO.getArea());
+
+		Secretaria secretaria = new Secretaria();
+
+		if (secretariaConsultadaArea.isPresent()) {
+			secretaria = secretariaConsultadaArea.get();
+		} else {
+			secretaria.setIdSecretaria(0L);
+		}
+
 		boolean verificaAreaOcupada = repository.findByArea(secretariaDTO.getArea()).isPresent();
 		boolean verificaIdConsultadoAreaDiferenteIdEnviado = secretaria.getIdSecretaria() != idSecretaria;
 
 		if (verificaAreaOcupada && verificaIdConsultadoAreaDiferenteIdEnviado) {
 			return new MensagemDTO(SECRETARIA_COM_AREA_EXISTENTE);
 		}
-		
+
 		if (secretariaConsultada.isPresent()) {
 			BeanUtils.copyProperties(secretariaDTO, secretaria);
-			
+
 			secretaria.setIdSecretaria(idSecretaria);
 
 			repository.save(secretaria);
-			return new MensagemDTO(SECRETARIA_ALTERADA_COM_SUCESSO);
 		}
-		
-		return new MensagemDTO(SECRETARIA_INEXISTENTE);
+
+		return new MensagemDTO(SECRETARIA_ALTERADA_COM_SUCESSO);
 	}
 
 	public MensagemDTO removerSecretaria(Long idSecretaria) {
