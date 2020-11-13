@@ -160,9 +160,11 @@ public class FuncionarioService implements IFuncionarioService {
 
 	public MensagemDTO removerFuncionario(Long idFuncionario) {
 		Optional<Funcionario> funcionarioOptional = repository.findById(idFuncionario);
+		
 		if (funcionarioOptional.isEmpty()) {
 			return new MensagemDTO(FUNCIONARIO_INEXISTENTE);
 		}
+		
 		Funcionario funcionario = funcionarioOptional.get();
 		Secretaria secretaria = secretariaRepository.findById(funcionario.getSecretaria().getIdSecretaria()).get();
 		adicionarOrcamentoFolhaSecretaria(secretaria, funcionario.getSalario());

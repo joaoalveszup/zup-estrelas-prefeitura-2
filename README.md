@@ -22,9 +22,18 @@
     - Listagem de todos projetos presentes;
     - Conclusão de projeto.
     
-#### Relacionamento
+#### RELACIONAMENTOS
 
 ![Relacionamento_Sistema_Prefeitura](https://user-images.githubusercontent.com/71403141/99076649-39cf2480-259a-11eb-8cda-e91cf28bb0d5.png)
+
+#### TESTES REALIZADOS
+
+1. Métodos testados em secretaria:
+    - Cadastro de nova secretaria;
+    - Remoção de secretaria.
+    
+1. Métodos testados em projeto:
+	-Conclusão de projeto.
 
 #### PRINCIPAIS BIBLIOTECAS UTILIZADAS PARA EXECUÇÃO DO PROJETO:
 
@@ -33,12 +42,16 @@
 * [Spring Web](https://mvnrepository.com/artifact/org.springframework/spring-web)
 * [Spring Boot Starter Data JPA](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa)
 * [Spring Boot DevTools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
-
+* [JUnit](https://mvnrepository.com/artifact/junit/junit)
 
 #### PROGRAMAS UTILIZADOS PARA EXECUÇÃO DO PROJETO:
 
 * [IDE Eclipse](https://www.eclipse.org/downloads/download.php?file=/oomph/epp/2020-06/R/eclipse-inst-win64.exe)
 * [MySQL](https://dev.mysql.com/downloads/installer/)
+
+#### TAREFAS EM ABERTO
+
+- Refatorar método alterarFuncionario para melhor visualização do mesmo.
 
 #### AUTOR
 
