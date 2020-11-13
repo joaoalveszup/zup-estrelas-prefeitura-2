@@ -30,23 +30,20 @@ public class Projeto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idProjeto;
 
-	@NotNull
+	@Column(nullable = false)
 	private String nome;
 
-	@NotNull
 	private String descricao;
 
-	@NotNull
+	@Column(nullable = false)
 	private Double custo;
 
-	@NotNull
 	@ManyToOne
 	@JsonBackReference
 	@JoinColumn(name = "id_secretaria", foreignKey = @ForeignKey(name = "FK_SECRETARIA_PROJETO"))
 	private Secretaria secretaria;
 
-	@NotNull
-	@Column(name = "data_inicio")
+	@Column(name = "data_inicio", nullable = false)
 	private LocalDate dataInicio;
 
 	@Column(name = "data_entrega")
