@@ -24,7 +24,7 @@
     
 #### Relacionamento
 
-[Imagem relacionamento](https://uploaddeimagens.com.br/images/002/960/490/full/Relacionamento_Sistema_Prefeitura.png?1605267668)
+![Relacionamento_Sistema_Prefeitura](https://user-images.githubusercontent.com/71403141/99076649-39cf2480-259a-11eb-8cda-e91cf28bb0d5.png)
 
 #### PRINCIPAIS BIBLIOTECAS UTILIZADAS PARA EXECUÇÃO DO PROJETO:
 
