@@ -54,7 +54,8 @@
 
 #### TAREFAS EM ABERTO
 
-- Refatorar método alterarFuncionario para melhor visualização do mesmo.
+- Refatorar método alterarFuncionario para melhor visualização do mesmo;
+- Refatorar nome das constatntes.
 
 #### AUTOR
 
