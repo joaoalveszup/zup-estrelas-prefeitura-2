@@ -38,6 +38,8 @@ public class FuncionarioService implements IFuncionarioService {
 	@Autowired
 	SecretariaRepository secretariaRepository;
 
+	//FIXME: Esse método está um pouco grande, sugiro aqui colocar essas 
+    // validações em métodos privados que são chamados dentro dele pra dar uma simplificada.
 	public MensagemDTO adicionarFuncionario(FuncionarioDTO funcionarioDTO) {
 		Optional<Secretaria> secretariaOptional = secretariaRepository.findById(funcionarioDTO.getIdSecretaria());
 
@@ -84,6 +86,8 @@ public class FuncionarioService implements IFuncionarioService {
 		return (List<Funcionario>) repository.findAll();
 	}
 
+	//FIXME: Esse método está um pouco grande, sugiro aqui colocar essas 
+	// validações em métodos privados que são chamados dentro dele pra dar uma simplificada.
 	public MensagemDTO alterarFuncionario(Long idFuncionario, FuncionarioDTO funcionarioDTO) {
 		Optional<Funcionario> funcionarioOptional = repository.findById(idFuncionario);
 

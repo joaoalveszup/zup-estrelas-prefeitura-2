@@ -18,6 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// TODO: O lombok tem a anotação @Data que equivale à Getter e Setter juntos.
+// Como tarefa, pesquise sobre os problemas de usar o lombok.
 @Entity
 @Getter
 @Setter

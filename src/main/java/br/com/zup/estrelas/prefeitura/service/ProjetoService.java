@@ -50,7 +50,10 @@ public class ProjetoService implements IProjetoService {
 		if (verificaCustoIgualInferiorZero) {
 			return new MensagemDTO(CUSTO_DO_PROJETO_INVALIDO);
 		}
-
+		
+		//FIXME: Aqui eu te sugeriria testar a condição de erro
+		// (fail first) primeiro, pois ficaria mais simples de
+		// entender.
 		if (salarioCompativelOrcamentoProjetoSecretaria) {
 			Projeto projeto = new Projeto();
 
@@ -104,6 +107,9 @@ public class ProjetoService implements IProjetoService {
 		boolean verificaDataConclusaoSuperiorDataInicio = conclusaoProjetoDTO.getDataEntrega()
 				.isAfter(projeto.getDataInicio());
 
+        //FIXME: Aqui eu te sugeriria testar a condição de erro
+        // (fail first) primeiro, pois ficaria mais simples de
+        // entender.
 		if (verificaDataConclusaoSuperiorDataInicio) {
 			projeto.setDataEntrega(conclusaoProjetoDTO.getDataEntrega());
 			projeto.setConcluido(true);

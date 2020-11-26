@@ -70,6 +70,7 @@ public class SecretariaService implements ISecretariaService {
 			return new MensagemDTO(SECRETARIA_COM_AREA_EXISTENTE);
 		}
 
+		//FIXME: Elias, você já fez essa validação ali em cima, não precisa fazer novamente.
 		if (secretariaConsultada.isPresent()) {
 			BeanUtils.copyProperties(secretariaDTO, secretaria);
 
